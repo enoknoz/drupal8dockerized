@@ -1,0 +1,102 @@
+#!/bin/bash
+
+WORKDIR=$(pwd)
+DATABASE_CONTAINER_NAME=d8d-mysql
+DRUPAL_IMAGE_NAME=d8d/drupal8
+DRUPAL_CONTAINER_NAME=d8d-drupal8
+
+#
+# Main script of d8d 
+#
+
+
+# Prints the errors
+function printError {
+	echo $1
+}
+
+# Prints notifications
+function printNotification {
+	echo $1
+}
+
+# Pulls a the official mysql server image from dockerHub
+#
+# $1: host port [database will accessable from your host systeme via this port]
+# $2: sql password for user: root
+# 
+#
+function setupDatabaseContainer {
+
+
+if [ -z "$1" ]
+then
+   printError "Please give a host port to map the container port." 
+   exit
+fi
+
+if [ -z "$2" ]
+then
+   printError "Specify root user password" 
+   exit
+fi
+
+docker run --name $3 -p $1:3306 -e MYSQL_ROOT_PASSWORD=$2 -d mysql/mysql-server:5.6
+#docker run --name $3 -e MYSQL_ROOT_PASSWORD=$2 -d mysql/mysql-server:5.6
+
+printNotification "Your DATABASE container is ready and accessible via port: "$1" on your local host!"
+
+}
+
+function getDrupalProject {
+
+git clone https://github.com/drupal-composer/drupal-project.git
+mv $1/drupal-project $1/source 
+}
+
+function runDrupal {
+
+
+if [ -z "$1" ]
+then
+   printError "Please give a host port to map the container port." 
+   exit
+fi
+
+# create the source folder
+
+docker build -t $3 .
+
+# check that folder exists
+docker run --name $4 -v $2/source:/var/www/html --link $4:$5 -p $1:80 -d $3 # with linked container
+#docker run --name $4 -v $2/source:/var/www/html -p $1:80 -d $3
+}
+
+
+if [ -z "$1" ]
+then
+   printError "Please give a host port to map the DATABASE container port." 
+   exit
+fi
+
+if [ -z "$2" ]
+then
+   printError "Specify root user password for DATABASE container" 
+   exit
+fi
+
+
+if [ -z "$3" ]
+then
+   printError "Please give a host port to map the DRUPAL container port." 
+   exit
+fi
+
+# Create the database container
+setupDatabaseContainer $1 $2 $DATABASE_CONTAINER_NAME
+getDrupalProject $WORKDIR
+runDrupal $3 $WORKDIR $DRUPAL_IMAGE_NAME $DRUPAL_CONTAINER_NAME #$DATABASE_CONTAINER_NAME
+docker logs -f $DRUPAL_CONTAINER_NAME
+printNotification "Your Dupal instance is ready to use and accessible via port: "$3 
+
+

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# this script runs inside of the drupal container and has following purpose:
+#
+# 
+#
+
+source ~/.bash_profile
+/etc/init.d/apache2 start
+#/etc/init.d/mysql start
+
+cd /var/www/html/
+composer create-project drupal-composer/drupal-project:8.x-dev drupal --stability dev --no-interaction
+
+# Finished print 
+echo ""
+echo "Your Drupal is ready to use!"
+echo "############################"
+echo ""
+
+# this is to keep the container: docker containe rneed a foreground task
+#
+# In this background also interesting: http://unix.stackexchange.com/questions/42901/how-to-do-nothing-forever-in-an-elegant-way
+tail -f > /dev/null 2>&1
