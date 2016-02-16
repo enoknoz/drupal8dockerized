@@ -68,7 +68,8 @@ fi
 docker build -t $3 .
 
 # check that folder exists
-docker run --name $4 -v $2/source:/var/www/html --link $4:$5 -p $1:80 -d $3 # with linked container
+docker run --name $4 -v $2/source:/var/www/html --link $5:database -p $1:80 -d $3 # with linked container
+echo docker run --name $4 -v $2/source:/var/www/html --link $5:database -p $1:80 -d $3 # with linked container
 #docker run --name $4 -v $2/source:/var/www/html -p $1:80 -d $3
 }
 
@@ -95,7 +96,7 @@ fi
 # Create the database container
 setupDatabaseContainer $1 $2 $DATABASE_CONTAINER_NAME
 getDrupalProject $WORKDIR
-runDrupal $3 $WORKDIR $DRUPAL_IMAGE_NAME $DRUPAL_CONTAINER_NAME #$DATABASE_CONTAINER_NAME
+runDrupal $3 $WORKDIR $DRUPAL_IMAGE_NAME $DRUPAL_CONTAINER_NAME $DATABASE_CONTAINER_NAME
 docker logs -f $DRUPAL_CONTAINER_NAME
 printNotification "Your Dupal instance is ready to use and accessible via port: "$3 
 
