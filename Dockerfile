@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 MAINTAINER twitter.com/z0nk0ne
 
-RUN apt-get update && apt-get -y install apache2 php5-mysql libapache2-mod-php php5-gd php5-cli git wget unzip
+RUN apt-get update && apt-get -y install apache2 php5-mysql libapache2-mod-php5 php5-gd php5-cli git wget unzip
 # mysql-server
 
 # Install composer
@@ -16,6 +16,7 @@ RUN touch ~/.bash_profile
 EXPOSE 80
 EXPOSE 3306
 
+ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 # Add the composer install script for Drupal
 ADD install_drupal drupal/install_drupal
 
