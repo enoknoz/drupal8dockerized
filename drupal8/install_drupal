@@ -7,13 +7,6 @@
 
 source ~/.bash_profile
 /etc/init.d/apache2 start
-a2enmod rewrite
-/etc/init.d/apache2 start
-
-echo ""
-echo "Done this!"
-echo ""
-
 #/etc/init.d/mysql start
 
 cd /var/www/html/
@@ -22,13 +15,8 @@ composer create-project drupal-composer/drupal-project:8.x-dev drupal --stabilit
 # Finished print 
 echo ""
 echo "Your Drupal is ready to use!"
-echo ""
-echo "Please press: ctr + c to eacape from the container log!"
-echo ""
 echo "############################"
 echo ""
-
-
 
 # this is to keep the container: docker containe rneed a foreground task
 #

@@ -1,34 +1,31 @@
-# Knock Knock - Framework
+# Drupal Dockerized
 
-## Drupal Dockerized
 
-###  Purpose
+##  Purpose
 
 This tool is aimed to build a quick instance of Drupal8. 
 
-### Background
-
-This tool is under development and results from a current project.
 
 ## Used Components
 
 The Drupal instance is based on Drupal Composer (https://github.com/drupal-composer/) which is used to get Drupal and Composer. The official docker mysql 5.6 is used in the database container.
+
 
 ## Dependencies
 
 * git
 * docker
 
+
 ## Some steps before
 
 Make sure the script is executable:
 
-```git clone https://github.com/enoknoz/knockknock.git```
-
-```cd knockknock```
-
-```chmod a+x d8d```
-
+```
+git clone https://github.com/enoknoz/knockknock.git
+cd knockknock
+chmod a+x d8d
+```
 
 ## Usage
 
