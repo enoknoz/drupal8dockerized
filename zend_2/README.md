@@ -30,7 +30,7 @@ Make sure the script is executable:
 cd knockknock/zend_2
 chmod a+x zend_2
 ```
-Run the script: ```./zend_2 <port> <container-name>``` then edit your local hosts file ```vim /etc/hosts``` and add **zend.local**. Finally open your browser and request: **zend.local**
+Run the script: ```./zend_2 <container-name>``` then edit your local hosts file ```vim /etc/hosts``` and add **zend.local**. Finally open your browser and request: **zend.local**
 
 ## Code folder
 Zend is downloaded in a folder called **knockknock/zend_2/zend**. 
